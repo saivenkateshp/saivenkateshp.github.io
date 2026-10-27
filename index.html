@@ -221,17 +221,95 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 .toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 .toast .btn{padding:8px 12px;font-size:14px}
 
+/* scroll progress */
+#prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(var(--sp,0));background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:40;box-shadow:0 0 10px var(--accent)}
+
+/* boot intro */
+#boot{position:fixed;inset:0;z-index:100;background:#05070c;color:#d1fae5;font:14px/1.7 "JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;transition:opacity .45s ease,visibility .45s;cursor:pointer}
+#boot.gone{opacity:0;visibility:hidden}
+#boot pre{white-space:pre-wrap;max-width:560px;width:calc(100% - 40px)}
+#boot .ok{color:#22c55e}#boot .k{color:#5eead4}#boot small{color:#64748b;display:block;margin-top:14px}
+
+/* JD matcher */
+.jd{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:900px){.jd{grid-template-columns:1fr}}
+.jd textarea{width:100%;min-height:260px;resize:vertical;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;color:var(--text);font:14px/1.55 Inter,sans-serif;outline:none}
+.jd textarea:focus{border-color:var(--accent)}
+.jd .row{margin-top:12px}
+.jdres{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px;min-height:260px}
+.gauge{display:flex;gap:18px;align-items:center}
+.gauge svg{width:120px;height:120px;flex:none}
+.gauge .trk{stroke:var(--chip);stroke-width:12;fill:none}
+.gauge .val{stroke:url(#gg);stroke-width:12;fill:none;stroke-linecap:round;transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1);transform:rotate(-90deg);transform-origin:60px 60px}
+.gauge .pct{font:800 28px Inter,sans-serif;fill:var(--text);text-anchor:middle;dominant-baseline:middle}
+.gauge p{color:var(--muted);font-size:14px}
+.gauge b{color:var(--text)}
+.mchips{display:flex;flex-wrap:wrap;gap:6px}
+.mchip{font-size:13px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);cursor:pointer;background:var(--bg2);transition:border-color .2s}
+.mchip.y{border-color:color-mix(in srgb,var(--ok) 55%,var(--line));background:color-mix(in srgb,var(--ok) 10%,var(--bg2))}
+.mchip.y:before{content:"✓ ";color:var(--ok);font-weight:700}
+.mchip.n{color:var(--muted);border-style:dashed;cursor:default}
+.mchip.sel{outline:2px solid var(--accent)}
+.evidence{font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding:6px 12px;background:var(--bg2);border-radius:0 10px 10px 0;min-height:44px}
+.evidence b{color:var(--text)}
+.jdres h4{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-family:"JetBrains Mono",monospace}
+.empty{color:var(--muted);font-size:14px;margin:auto;text-align:center}
+
+/* puzzle */
+.puz{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+.puz .goal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.puz .goal span{color:var(--muted);font-size:14px}
+.slots{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-height:52px;padding:10px;border:1px dashed var(--line);border-radius:14px;margin-bottom:14px;position:relative}
+.slots .ph{color:var(--muted);font-size:14px}
+.pc{padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);font-weight:600;font-size:14px;cursor:pointer;transition:transform .15s,border-color .2s,opacity .2s;user-select:none}
+.pc:hover{transform:translateY(-2px);border-color:var(--accent)}
+.pc.used{opacity:.25;pointer-events:none}
+.slots .pc{cursor:default;border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--bg2))}
+.slots .arr{color:var(--accent)}
+.pool{display:flex;gap:8px;flex-wrap:wrap}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.flowdone .pc{animation:glow 1.2s ease}
+@keyframes glow{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}}
+.pmeta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;font-size:14px;color:var(--muted)}
+
+/* achievements */
+#trophy{position:fixed;left:18px;bottom:18px;z-index:45;display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow);cursor:pointer;font-size:14px;font-weight:600;transition:transform .2s,border-color .2s}
+#trophy:hover{transform:translateY(-2px);border-color:var(--accent)}
+#trophy.bump{animation:bump .6s}
+@keyframes bump{30%{transform:scale(1.18)}60%{transform:scale(.96)}}
+#trophy .ring{width:22px;height:22px}
+#achv{position:fixed;left:18px;bottom:70px;z-index:46;width:300px;max-width:calc(100vw - 36px);background:var(--bg2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px;display:none}
+#achv.on{display:block;animation:pop .2s ease}
+#achv h4{font-size:14px;margin-bottom:8px;display:flex;justify-content:space-between}
+#achv li{list-style:none;display:flex;gap:10px;align-items:flex-start;padding:7px 4px;font-size:13px;border-top:1px solid var(--line)}
+#achv li i{font-style:normal;width:22px;text-align:center;filter:grayscale(1);opacity:.45}
+#achv li.got i{filter:none;opacity:1}
+#achv li small{display:block;color:var(--muted)}
+#achv li.got b{color:var(--accent)}
+
+/* live github */
+.gh{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-family:"JetBrains Mono",monospace;min-height:16px}
+.gh .live{color:var(--ok)}
+
+/* magnetic */
+.mag{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.win{opacity:1!important;transform:none!important}}
 @media (hover:none){#spot{display:none}}
 </style>
 </head>
 <body>
 <div id="spot" aria-hidden="true"></div>
+<div id="prog" aria-hidden="true"></div>
+<div id="boot" aria-hidden="true" style="display:none"><pre id="bootlog"></pre></div>
+<script>try{if(!sessionStorage.getItem("booted")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.getElementById("boot").style.display="flex"}catch(e){}</script>
 
 <nav><div class="wrap">
   <a class="logo" href="#top">~/sai<span>.</span>palatla</a>
   <div class="links">
     <a href="#ask" class="hide-sm">Ask my résumé</a>
+    <a href="#match" class="hide-sm">Match a job</a>
     <a href="#experience" class="hide-sm">Experience</a>
     <a href="#projects">Projects</a>
     <a href="#contact" class="hide-sm">Contact</a>
@@ -293,6 +371,24 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
   </div>
 </div></section>
 
+<section id="match"><div class="wrap">
+  <div class="eyebrow">For recruiters · JD matcher</div>
+  <h2>Paste a job description. See the fit.</h2>
+  <p class="sub">Drop in any job posting. It picks out the tech skills the role asks for, checks each one against my résumé, and shows the exact line that backs every match. Skills my résumé doesn't list are shown too. It runs in your browser, and nothing you paste leaves this page.</p>
+  <div class="jd">
+    <div>
+      <label for="jdtext" class="sr">Job description</label>
+      <textarea id="jdtext" placeholder="Paste a job description here…" maxlength="20000"></textarea>
+      <div class="row">
+        <button class="btn primary mag" id="jdgo">Analyze fit</button>
+        <button class="btn" id="jdsample">Try a sample JD</button>
+        <button class="btn" id="jdclear">Clear</button>
+      </div>
+    </div>
+    <div class="jdres" id="jdres" aria-live="polite"><div class="empty">📋 Paste a job description and press <b>Analyze fit</b>.</div></div>
+  </div>
+</div></section>
+
 <section id="experience"><div class="wrap">
   <div class="eyebrow">Experience</div>
   <h2>Where I've shipped</h2>
@@ -306,6 +402,18 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
   <p class="sub">Open a project to watch its pipeline run. Click any stage to see what it does.</p>
   <div class="filters" id="projFilters"></div>
   <div class="grid" id="projGrid"></div>
+</div></section>
+
+<section id="play"><div class="wrap">
+  <div class="eyebrow">Mini-game</div>
+  <h2>Build the pipeline</h2>
+  <p class="sub">Think like a data engineer: click the stages in the order the data flows. Get it right and watch it run.</p>
+  <div class="puz" id="puz">
+    <div class="goal"><b id="pzTitle"></b><span id="pzStat"></span></div>
+    <div class="slots" id="pzSlots"><span class="ph">Click the stages below in order →</span></div>
+    <div class="pool" id="pzPool"></div>
+    <div class="pmeta"><button class="btn" id="pzReset">↺ Reset</button><button class="btn" id="pzNext">Next pipeline →</button><span id="pzMsg"></span></div>
+  </div>
 </div></section>
 
 <section id="skills"><div class="wrap">
@@ -354,6 +462,8 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
   <form class="ln" id="tform" autocomplete="off"><span class="ps">sai@portfolio:~$</span><label for="tin" class="sr">Terminal input</label><input id="tin" spellcheck="false" autocapitalize="off"></form>
 </div>
 <canvas id="confetti" aria-hidden="true"></canvas>
+<button id="trophy" aria-label="Achievements" aria-expanded="false"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" fill="none" stroke="var(--chip)" stroke-width="5"/><circle id="trRing" cx="18" cy="18" r="15" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="94.25" stroke-dashoffset="94.25" transform="rotate(-90 18 18)" style="transition:stroke-dashoffset .6s"/></svg>🏆 <span id="trCount">0/8</span></button>
+<div id="achv" role="dialog" aria-label="Achievements"><h4><span>Explorer achievements</span><span id="achvPct" style="color:var(--muted)"></span></h4><ul id="achvList"></ul></div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -470,7 +580,7 @@ const smooth=()=>reduce?"auto":"smooth";
 /* ================= THEME ================= */
 (function(){const r=document.documentElement;let s=null;try{s=localStorage.getItem("theme")}catch(e){}
   if(s)r.dataset.theme=s;else if(matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light"})();
-function toggleTheme(){const r=document.documentElement;r.dataset.theme=r.dataset.theme==="light"?"dark":"light";try{localStorage.setItem("theme",r.dataset.theme)}catch(e){}}
+function toggleTheme(){ach("theme");const r=document.documentElement;r.dataset.theme=r.dataset.theme==="light"?"dark":"light";try{localStorage.setItem("theme",r.dataset.theme)}catch(e){}}
 $("#themeBtn").onclick=toggleTheme;
 
 /* ================= TYPER ================= */
@@ -542,7 +652,7 @@ const RAG=(function(){
     if(sec&&sec.s>top.s*.72&&sec.d.text!==top.d.text) html+="<br>Also: "+highlight(sec.d.text,r.terms)+"<span class='src'>↳ "+esc(sec.d.src)+"</span>";
     return{r,ms,ok:true,html};
   }
-  return{answer,size:D.length,highlight};
+  return{answer,search,size:D.length,highlight};
 })();
 
 (function(){
@@ -556,7 +666,7 @@ const RAG=(function(){
   let busy=false;
   window.askResume=function(q){
     q=(q||"").trim().slice(0,200);if(!q||busy)return;busy=true;
-    add("me",esc(q));const wait=add("bot","<span class='thinking'><i></i><i></i><i></i></span>");
+    ach("ask");add("me",esc(q));const wait=add("bot","<span class='thinking'><i></i><i></i><i></i></span>");
     const res=RAG.answer(q);
     $("#qtokens").innerHTML="<b style='color:var(--text)'>Query tokens:</b> "+(res.r.base.map(t=>`<span class='tag mono'>${esc(t)}</span>`).join(" ")||"<i>none</i>")+
       (res.r.expanded.length?"<br><b style='color:var(--text)'>Expanded with:</b> "+res.r.expanded.slice(0,8).map(t=>`<span class='tag mono'>${esc(t)}</span>`).join(" "):"");
@@ -656,6 +766,7 @@ function miniSvg(n){const w=220,step=w/(n-1);let s=`<svg class="mini" viewBox="-
       ${p.metric?`<div class="metric">${p.metric.v}<small>${p.metric.l}</small></div>`:""}
       <div class="emoji">${p.emoji}</div><h3>${p.name}</h3><p>${p.blurb}</p>
       ${miniSvg(p.stages.length)}
+      ${p.repo?`<div class="gh" data-repo="${p.repo}"></div>`:""}
       <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
     </article>`).join("");
   function filter(c){[...f.children].forEach(b=>b.classList.toggle("on",b.dataset.c===c));
@@ -666,7 +777,7 @@ function miniSvg(n){const w=220,step=w/(n-1);let s=`<svg class="mini" viewBox="-
 })();
 let lastFocus=null;
 function openProject(id){
-  const p=projects.find(x=>x.id===id);if(!p)return;closeAll(true);lastFocus=document.activeElement;
+  const p=projects.find(x=>x.id===id);if(!p)return;ach("pipe");closeAll(true);lastFocus=document.activeElement;
   const n=p.stages.length,cols=innerWidth<640?2:(n>4?3:n),bw=128,bh=46,gx=34,gy=40,rows=Math.ceil(n/cols),W=cols*bw+(cols-1)*gx,H=rows*bh+(rows-1)*gy;
   const pos=p.stages.map((s,i)=>{const r=Math.floor(i/cols),c=r%2?cols-1-(i%cols):i%cols;return{x:c*(bw+gx),y:r*(bh+gy)}});
   let path="M"+(pos[0].x+bw/2)+","+(pos[0].y+bh/2);pos.slice(1).forEach(q=>path+=" L"+(q.x+bw/2)+","+(q.y+bh/2));
@@ -699,6 +810,9 @@ const ACTIONS=[
   {n:"LinkedIn",k:"Link",run:()=>open(LINKS.linkedin,"_blank")},
   {n:"GitHub",k:"Link",run:()=>open(LINKS.github,"_blank")},
   {n:"LeetCode",k:"Link",run:()=>open(LINKS.leetcode,"_blank")},
+  {n:"Match a job description",k:"Tool",run:()=>{document.getElementById("match").scrollIntoView({behavior:smooth()});setTimeout(()=>$("#jdtext").focus({preventScroll:true}),400)}},
+  {n:"Play: Build the pipeline",k:"Fun",run:()=>document.getElementById("play").scrollIntoView({behavior:smooth()})},
+  {n:"Show achievements",k:"Fun",run:()=>setTimeout(()=>$("#trophy").click(),50)},
   {n:"Celebrate 🎉",k:"Fun",run:()=>celebrate()}
 ];
 (function(){
@@ -709,7 +823,7 @@ const ACTIONS=[
     sel=Math.max(0,Math.min(sel,items.length-1));
     ul.innerHTML=items.map((a,i)=>`<li role="option" id="po${i}" class="${i===sel?"sel":""}" data-i="${i}" aria-selected="${i===sel}"><span>${esc(a.n)}</span><small>${a.k}</small></li>`).join("")||"<li><small>No matches</small></li>";
     inp.setAttribute("aria-activedescendant","po"+sel);const s=ul.querySelector(".sel");s&&s.scrollIntoView({block:"nearest"})}
-  window.openPal=()=>{closeAll(true);lastFocus=document.activeElement;ov.classList.add("on");inp.value="";sel=0;render();inp.focus()};
+  window.openPal=()=>{ach("pal");closeAll(true);lastFocus=document.activeElement;ov.classList.add("on");inp.value="";sel=0;render();inp.focus()};
   inp.oninput=()=>{sel=0;render()};
   inp.onkeydown=e=>{if(!items.length)return;if(e.key==="ArrowDown"){sel=(sel+1)%items.length;render();e.preventDefault()}else if(e.key==="ArrowUp"){sel=(sel-1+items.length)%items.length;render();e.preventDefault()}
     else if(e.key==="Enter"&&items[sel]){e.preventDefault();const a=items[sel];closeAll(true);a.run()}};
@@ -750,6 +864,9 @@ Welcome! Type <span class='c3'>help</span> to see commands. Try <span class='c3'
   <span class='c3'>open &lt;project&gt;</span>      animated pipeline (tweets, opera, deepmath, nl2sql)
   <span class='c3'>ask &lt;question&gt;</span>      query the résumé RAG from the shell
   <span class='c3'>skills [area]</span>       list skills by area
+  <span class='c3'>match</span>               open the job-description matcher
+  <span class='c3'>play</span>                pipeline puzzle mini-game
+  <span class='c3'>achievements</span>        your exploration progress
   <span class='c3'>contact</span>             how to reach me
   <span class='c3'>resume</span>              download the PDF
   <span class='c3'>theme</span>               toggle light/dark
@@ -772,12 +889,15 @@ Welcome! Type <span class='c3'>help</span> to see commands. Try <span class='c3'
     date:()=>new Date().toString(),
     echo:a=>esc(a.join(" ")),
     sudo:a=>{if(a.join(" ").toLowerCase()==="hire sai"){setTimeout(celebrate,200);return"<span class='c1'>[sudo] permission granted ✔</span>\nInitiating hiring sequence… 🎉\nNext step: <a href='mailto:"+EMAIL+"?subject=Let%27s%20talk'>email "+EMAIL+"</a>"}return"<span class='err'>sai is not in the sudoers file. This incident will be reported. 😉</span>"},
-    rm:()=>"<span class='err'>nice try 😄</span>"
+    rm:()=>"<span class='err'>nice try 😄</span>",
+    match:()=>{closeTerm();setTimeout(()=>{document.getElementById("match").scrollIntoView({behavior:smooth()});$("#jdtext").focus({preventScroll:true})},60);return"opening JD matcher…"},
+    play:()=>{closeTerm();setTimeout(()=>document.getElementById("play").scrollIntoView({behavior:smooth()}),60);return"loading pipeline puzzle…"},
+    achievements:()=>ACH.map(([k,i,n,d])=>(GOT.has(k)?"<span class='c1'>✔</span> "+i+" "+n:"<span class='dim'>○ ??? · "+d+"</span>")).join("\n")+`\n<span class='dim'>${GOT.size}/${ACH.length} unlocked</span>`
   };
   function run(line){const raw=line.trim();print(`<span class='ps'>sai@portfolio:~$</span> ${esc(raw)}`);if(!raw)return;hist.push(raw);hi=hist.length;
     const [cmd,...args]=raw.split(/\s+/),fn=CMDS[cmd.toLowerCase()];if(!fn){print(`<span class='err'>command not found: ${esc(cmd)}</span> · type <span class='c3'>help</span>`);return}
     const r=fn(args);if(r!=null)print(r)}
-  window.openTerm=()=>{closeAll(true);lastFocus=document.activeElement;term.classList.add("on");document.body.style.overflow="hidden";if(!out.innerHTML)print(banner);setTimeout(()=>inp.focus(),30)};
+  window.openTerm=()=>{ach("term");closeAll(true);lastFocus=document.activeElement;term.classList.add("on");document.body.style.overflow="hidden";if(!out.innerHTML)print(banner);setTimeout(()=>inp.focus(),30)};
   window.closeTerm=()=>{term.classList.remove("on");document.body.style.overflow=""};
   $("#tform").onsubmit=e=>{e.preventDefault();run(inp.value);inp.value=""};
   inp.onkeydown=e=>{
@@ -811,8 +931,9 @@ function closeAll(silent){
 })();
 
 /* ================= CONFETTI EASTER EGG ================= */
-function celebrate(){
-  toast(`🎉 <b>You found the secret!</b> <span style="color:var(--muted)">Let's talk:</span> <a class="btn primary" href="mailto:${EMAIL}?subject=Let%27s%20talk">Email Sai</a> <button class="btn" onclick="copyEmail()">Copy email</button>`,8000);
+function celebrate(fromAch,head){
+  if(!fromAch)ach("egg");
+  toast(`${head||"🎉 <b>You found the secret!</b>"} <span style="color:var(--muted)">Let's talk:</span> <a class="btn primary" href="mailto:${EMAIL}?subject=Let%27s%20talk">Email Sai</a> <button class="btn" onclick="copyEmail()">Copy email</button>`,8000);
   if(reduce)return;
   const cv=$("#confetti"),c=cv.getContext("2d"),D=Math.min(devicePixelRatio||1,2),w=innerWidth,h=innerHeight;cv.width=w*D;cv.height=h*D;c.setTransform(D,0,0,D,0,0);
   const cols=["#5eead4","#a78bfa","#fbbf24","#f472b6","#60a5fa","#34d399"];
@@ -820,6 +941,140 @@ function celebrate(){
   let f=0;(function tick(){c.clearRect(0,0,w,h);ps.forEach(p=>{p.vy+=.38;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);c.restore()});
     if(++f<200)requestAnimationFrame(tick);else c.clearRect(0,0,w,h)})();
 }
+
+/* ================= ACHIEVEMENTS ================= */
+const ACH=[["ask","🤖","Curious recruiter","Asked my résumé a question"],["jd","📋","Talent scout","Matched a job description"],["pipe","🔀","Systems thinker","Opened a project pipeline"],
+  ["puzzle","🧩","Data engineer","Solved a pipeline puzzle"],["term","⌨️","Hacker","Opened terminal mode"],["pal","⚡","Power user","Used the command palette (Ctrl/⌘+K)"],
+  ["theme","🌓","Night owl","Switched the theme"],["egg","🎉","Secret finder","Found the easter egg"]];
+let GOT=new Set();try{GOT=new Set(JSON.parse(localStorage.getItem("ach")||"[]"))}catch(e){}
+function renderAch(){const n=GOT.size,t=ACH.length;$("#trCount").textContent=n+"/"+t;$("#trRing").style.strokeDashoffset=94.25*(1-n/t);
+  $("#achvPct").textContent=Math.round(n/t*100)+"%";
+  $("#achvList").innerHTML=ACH.map(([k,i,name,d])=>`<li class="${GOT.has(k)?"got":""}"><i>${i}</i><span><b>${GOT.has(k)?name:"???"}</b><small>${d}</small></span></li>`).join("")}
+function ach(k){if(GOT.has(k))return;GOT.add(k);try{localStorage.setItem("ach",JSON.stringify([...GOT]))}catch(e){}renderAch();
+  const a=ACH.find(x=>x[0]===k),tr=$("#trophy");tr.classList.remove("bump");void tr.offsetWidth;tr.classList.add("bump");
+  if(GOT.size===ACH.length)setTimeout(()=>celebrate(true,"🏆 <b>100% explored!</b> You've seen everything. Next step:"),900);
+  else if(a&&k!=="egg")toast(`${a[1]} Achievement unlocked: <b>${a[2]}</b> <span style="color:var(--muted)">(${GOT.size}/${ACH.length})</span>`,2600)}
+$("#trophy").onclick=e=>{e.stopPropagation();const p=$("#achv"),o=p.classList.toggle("on");$("#trophy").setAttribute("aria-expanded",o)};
+document.addEventListener("click",e=>{if(!e.target.closest("#achv,#trophy"))$("#achv").classList.remove("on")});
+renderAch();
+
+/* ================= JD MATCHER ================= */
+(function(){
+  // [label, aliases(regex source, case-insensitive), onResume, evidence query]
+  const Y=true,N=false;
+  const SK=[
+   ["Python",["python"],Y],["SQL",["sql"],Y,"sql pandas etl workflows"],["Java",["java(?!script)"],Y],["JavaScript",["javascript","\\bjs\\b"],Y],["C++",["c\\+\\+"],Y],
+   ["Generative AI",["generative ai","gen ?ai"],Y,"rag pipeline gemini api fastapi"],["LLMs",["llms?","large language models?"],Y,"gemini api rag pipeline runbooks"],["RAG",["rag","retrieval[- ]augmented"],Y],
+   ["Agentic AI / agents",["agentic","ai agents?","multi-agent","autonomous agents?"],Y,"agentic workflows langchain adk"],["LangChain",["langchain"],Y],["LangGraph",["langgraph"],Y],["Google ADK",["google adk","agent development kit"],Y],
+   ["Gemini",["gemini"],Y],["OpenAI API",["openai","gpt-?4","chatgpt"],Y],["Vector databases",["vector (db|database|store|search)s?","pinecone"],Y,"pinecone vector search"],["Embeddings",["embeddings?"],Y],
+   ["Prompt engineering",["prompt engineering","prompting"],Y],["NLP",["nlp","natural language processing"],Y],["Semantic search",["semantic search"],Y],["Guardrails",["guardrails?"],Y],
+   ["Machine learning",["machine learning","\\bml\\b"],Y,"cnn tensorflow keras"],["Deep learning",["deep learning","neural networks?","cnn"],Y,"cnn tensorflow"],["TensorFlow",["tensorflow"],Y],["Keras",["keras"],Y],
+   ["Computer vision",["computer vision","opencv"],Y,"opencv cnn"],["GCP",["gcp","google cloud"],Y,"gcp dataproc pyspark telemetry"],["BigQuery",["bigquery"],Y],["Vertex AI",["vertex ai","vertex"],Y],["GKE",["gke"],Y],
+   ["Dataproc",["dataproc"],Y],["Cloud Composer",["cloud composer"],Y],["AWS",["aws","amazon web services","\\bs3\\b","\\bec2\\b"],Y,"aws ec2 s3"],["Snowflake",["snowflake"],Y],["Databricks",["databricks"],Y],
+   ["Spark / PySpark",["spark","pyspark"],Y,"pyspark dataproc"],["Kafka",["kafka"],Y],["Airflow",["airflow"],Y],["ETL / ELT",["etl","elt","data pipelines?"],Y,"etl workflows python pandas sap"],
+   ["Data modeling",["data model(l)?ing","dimensional model","star schema"],Y,"star schemas dimensional"],["Data warehousing",["data warehous(e|ing)"],Y,"warehouse bigquery merge"],["Streaming",["streaming","real[- ]time"],Y,"kafka streaming real-time"],
+   ["FastAPI",["fastapi"],Y],["Flask",["flask"],Y],["Django",["django"],Y],["Spring Boot",["spring( boot)?"],Y],["Node.js",["node\\.?js"],Y],["REST APIs",["rest(ful)?( apis?)?"],Y,"rest apis fastapi"],
+   ["GraphQL",["graphql"],Y],["Microservices",["microservices?"],Y],["Docker",["docker","containeri[sz]ation","containers?"],Y,"containerized docker gke"],["Kubernetes",["kubernetes","k8s"],Y,"gke containerized"],
+   ["CI/CD",["ci/cd","ci ?cd","continuous integration"],Y],["Jenkins",["jenkins"],Y],["Monitoring / observability",["observability","monitoring","grafana","prometheus"],Y,"grafana prometheus monitoring"],
+   ["Elasticsearch",["elasticsearch","elastic search","opensearch"],Y],["Solr",["solr"],Y],["MySQL",["mysql"],Y],["MongoDB",["mongo(db)?"],Y],["Tableau",["tableau"],Y],["Power BI",["power ?bi"],Y],["Looker",["looker"],Y],
+   ["Pandas",["pandas"],Y],["Git",["\\bgit\\b","github"],Y,"github copilot"],["Security / IAM / RBAC",["rbac","\\biam\\b","access control"],Y,"rbac iam"],["Data governance",["governance","data catalog"],Y,"governance catalog"],
+   ["PyTorch",["pytorch"],N],["scikit-learn",["scikit-?learn","sklearn"],N],["Hugging Face",["hugging ?face","transformers library"],N],["Fine-tuning",["fine[- ]tun(e|ing)","lora","peft","rlhf"],N],
+   ["LlamaIndex",["llama ?index"],N],["CrewAI / AutoGen",["crewai","autogen"],N],["MCP",["model context protocol","\\bmcp\\b"],N],["MLflow",["mlflow"],N],["Kubeflow",["kubeflow"],N],["SageMaker",["sagemaker"],N],
+   ["Bedrock",["bedrock"],N],["Azure",["azure(?! data factory)"],N],["Terraform",["terraform"],N],["dbt",["\\bdbt\\b"],N],["Redshift",["redshift"],N],["PostgreSQL",["postgres(ql)?"],N],["Redis",["redis"],N],
+   ["Hadoop / Hive",["hadoop","\\bhive\\b"],N],["Flink",["flink"],N],["Scala",["scala"],N],["TypeScript",["typescript"],N],["React",["react(\\.js|js)?\\b"],N],["Rust",["\\brust\\b"],N],["Go",["golang"],N],
+   ["FAISS / Chroma / Weaviate",["faiss","chroma(db)?","weaviate","pgvector","milvus","qdrant"],N],["LLM evaluation",["llm eval","ragas","evals?\\b"],N],["Linux",["linux","bash"],N]
+  ].map(([l,al,has,q])=>({l,re:new RegExp("(^|[^a-z0-9])("+al.join("|")+")(?![a-z0-9])","i"),has,q:q||l}));
+  const ta=$("#jdtext"),res=$("#jdres");
+  const SAMPLE=`AI Engineer, GenAI Platform
+
+We're looking for an AI Engineer to build production LLM applications. You will design retrieval-augmented generation (RAG) pipelines, build agentic workflows with LangChain or LangGraph, and deploy services on Google Cloud (GCP) or AWS.
+
+Requirements
+- 3+ years of software or data engineering experience in Python and SQL
+- Experience with vector databases (Pinecone, FAISS) and embeddings
+- Building REST APIs with FastAPI; Docker and Kubernetes
+- Data pipelines with Spark, Kafka, Airflow; BigQuery or Snowflake
+- CI/CD, monitoring and observability for ML services
+Nice to have: PyTorch, fine-tuning, MLflow, Terraform`;
+  function analyze(){
+    const text=ta.value.trim();if(text.length<20){res.innerHTML="<div class='empty'>Paste a longer job description (at least a sentence or two).</div>";return}
+    const found=SK.filter(s=>s.re.test(text));
+    if(!found.length){res.innerHTML="<div class='empty'>I couldn't detect any tech skills I recognise in that text. It checks for about 90 common AI, data and cloud skills.</div>";return}
+    const yes=found.filter(s=>s.has),no=found.filter(s=>!s.has),pct=Math.round(yes.length/found.length*100);
+    const label=pct>=75?"Strong match":pct>=55?"Good match":"Partial match";
+    const C=2*Math.PI*48;
+    res.innerHTML=`<div class="gauge"><svg viewBox="0 0 120 120" role="img" aria-label="${pct}% skill match"><defs><linearGradient id="gg"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
+      <circle class="trk" cx="60" cy="60" r="48"/><circle class="val" id="gv" cx="60" cy="60" r="48" stroke-dasharray="${C}" stroke-dashoffset="${C}"/><text class="pct" x="60" y="60" id="gp">0%</text></svg>
+      <div><b style="font-size:20px">${label}</b><p>${yes.length} of ${found.length} skills in this posting appear on my résumé. Click a ✓ skill to see the evidence.</p></div></div>
+      <h4>On my résumé (${yes.length})</h4><div class="mchips">${yes.map((s,i)=>`<button class="mchip y" data-i="${i}">${esc(s.l)}</button>`).join("")||"<span class='empty'>none</span>"}</div>
+      <div class="evidence" id="ev">Click a ✓ skill above to see the résumé line that backs it.</div>
+      ${no.length?`<h4>Not listed on my résumé (${no.length})</h4><div class="mchips">${no.map(s=>`<span class="mchip n">${esc(s.l)}</span>`).join("")}</div>`:""}
+      <div class="row" style="margin-top:4px"><a class="btn primary" href="mailto:${EMAIL}?subject=${encodeURIComponent("Role for Sai ("+pct+"% skill match)")}">Email Sai about this role</a><button class="btn" id="jdask">Ask my résumé more</button></div>`;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{$("#gv").style.strokeDashoffset=C*(1-pct/100)}));
+    if(reduce)$("#gp").textContent=pct+"%";else{let t0=null;const st=t=>{if(t0===null)t0=t;const p=Math.min((t-t0)/1100,1);$("#gp").textContent=Math.round(pct*(1-Math.pow(1-p,3)))+"%";if(p<1)requestAnimationFrame(st)};requestAnimationFrame(st)}
+    res.querySelectorAll(".mchip.y").forEach(b=>b.onclick=()=>{res.querySelectorAll(".mchip.y").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
+      const s=yes[+b.dataset.i],r=RAG.search(s.q,10),h=r.hits.find(x=>!/^(Skills|Profile|Contact)/.test(x.d.src)&&!/^At /.test(x.d.text))||r.hits[0];
+      $("#ev").innerHTML=h?`<b>${esc(s.l)}</b>: ${RAG.highlight(h.d.text,r.terms)}<br><small>↳ ${esc(h.d.src)}</small>`:`<b>${esc(s.l)}</b> is listed in my skills.`});
+    const first=res.querySelector(".mchip.y");first&&first.click();
+    $("#jdask").onclick=()=>goAsk(yes[0]?"Where has he used "+yes[0].l+"?":"What are his main skills?");
+    ach("jd");
+  }
+  $("#jdgo").onclick=analyze;$("#jdsample").onclick=()=>{ta.value=SAMPLE;analyze()};$("#jdclear").onclick=()=>{ta.value="";res.innerHTML="<div class='empty'>📋 Paste a job description and press <b>Analyze fit</b>.</div>";ta.focus()};
+  ta.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();analyze()}});
+})();
+
+/* ================= PIPELINE PUZZLE ================= */
+(function(){
+  const order=["tweets","opera","deepmath","nl2sql"].map(id=>projects.find(p=>p.id===id));let pi=0,next=0,miss=0,t0=0,done=false;
+  const slots=$("#pzSlots"),pool=$("#pzPool"),msg=$("#pzMsg");
+  function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}
+    if(a.every((x,i)=>x===order[pi].stages[i][0]))return shuffle(a);return a}
+  function load(){const p=order[pi];next=0;miss=0;done=false;t0=0;$("#pzTitle").textContent=p.emoji+" "+p.name;$("#pzStat").textContent=`Stage 0/${p.stages.length}`;
+    slots.className="slots";slots.innerHTML="<span class='ph'>Click the stages below in the order the data flows →</span>";msg.textContent="";
+    pool.innerHTML=shuffle(p.stages.map(s=>s[0])).map(s=>`<button class="pc">${esc(s)}</button>`).join("")}
+  pool.onclick=e=>{const b=e.target.closest(".pc");if(!b||done)return;if(!t0)t0=performance.now();const p=order[pi];
+    if(b.textContent===p.stages[next][0]){if(!next)slots.innerHTML="";else slots.insertAdjacentHTML("beforeend","<span class='arr'>→</span>");
+      slots.insertAdjacentHTML("beforeend",`<span class="pc">${esc(b.textContent)}</span>`);b.classList.add("used");next++;$("#pzStat").textContent=`Stage ${next}/${p.stages.length}`;
+      msg.innerHTML=`<span style="color:var(--muted)">${p.stages[next-1][1]}</span>`;
+      if(next===p.stages.length){done=true;const s=((performance.now()-t0)/1000).toFixed(1);slots.classList.add("flowdone");
+        msg.innerHTML=`✅ <b style="color:var(--text)">Pipeline running!</b> ${s}s · ${miss} mistake${miss===1?"":"s"}. ${miss===0?"Flawless. 🔥":""}`;ach("puzzle")}}
+    else{miss++;b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake");msg.innerHTML=`<span style="color:var(--warm)">Not yet: what does the data need first?</span>`}};
+  $("#pzReset").onclick=load;$("#pzNext").onclick=()=>{pi=(pi+1)%order.length;load()};
+  load();
+})();
+
+/* ================= LIVE GITHUB ================= */
+(function(){
+  let loaded=false;const ago=d=>{const days=Math.floor((Date.now()-new Date(d))/864e5);return days<1?"today":days===1?"1 day ago":days<30?days+" days ago":Math.floor(days/30)+" mo ago"};
+  new IntersectionObserver((es,o)=>{if(!es[0].isIntersecting||loaded)return;loaded=true;o.disconnect();
+    fetch("https://api.github.com/users/saivenkateshp/repos?per_page=100").then(r=>r.ok?r.json():Promise.reject(r.status)).then(list=>{
+      const m={};list.forEach(r=>m[r.name]=r);
+      $$(".gh[data-repo]").forEach(el=>{const r=m[el.dataset.repo];if(!r)return;
+        el.innerHTML=`<span class="live">● live</span><span>★ ${r.stargazers_count}</span><span>updated ${ago(r.pushed_at)}</span>${(r.topics||[]).slice(0,3).map(t=>`<span>#${esc(t)}</span>`).join("")}`})
+    }).catch(()=>{})}).observe($("#projGrid"));
+})();
+
+/* ================= MAGNETIC BUTTONS + SCROLL PROGRESS ================= */
+(function(){
+  addEventListener("scroll",()=>{const h=document.documentElement,max=h.scrollHeight-innerHeight;h.style.setProperty("--sp",max>0?(scrollY/max).toFixed(4):0)},{passive:true});
+  if(reduce||!matchMedia("(hover:hover) and (pointer:fine)").matches)return;
+  $$(".btn.primary").forEach(b=>b.classList.add("mag"));
+  document.addEventListener("pointermove",e=>{const b=e.target.closest&&e.target.closest(".mag");if(!b)return;const r=b.getBoundingClientRect();
+    b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.22}px,${(e.clientY-r.top-r.height/2)*.3}px)`},{passive:true});
+  document.addEventListener("pointerout",e=>{const b=e.target.closest&&e.target.closest(".mag");if(b&&!b.contains(e.relatedTarget))b.style.transform=""});
+})();
+
+/* ================= BOOT INTRO (once per session) ================= */
+(function(){
+  const boot=$("#boot");if(boot.style.display==="none")return;
+  const lines=[`<span class="k">sai@portfolio</span>:~$ ./boot --profile`,`loading résumé index (${RAG.size} passages) ........ <span class="ok">ok</span>`,
+    `building skill graph (${Object.values(CATS).reduce((a,c)=>a+c.s.length,0)} nodes) ........... <span class="ok">ok</span>`,`warming up pipelines (${projects.length}) ............... <span class="ok">ok</span>`,
+    `status: <span class="k">open to AI/ML Engineer roles</span>`,`<small>click or press any key to skip</small>`];
+  let i=0,timer;const log=$("#bootlog");
+  const end=()=>{clearInterval(timer);boot.classList.add("gone");try{sessionStorage.setItem("booted","1")}catch(e){}setTimeout(()=>boot.remove(),500);removeEventListener("keydown",end,true)};
+  timer=setInterval(()=>{if(i<lines.length){log.insertAdjacentHTML("beforeend",lines[i++]+"\n")}else end()},230);
+  boot.addEventListener("click",end);addEventListener("keydown",end,true);
+})();
 
 /* ================= COUNTERS + REVEAL + NAV ================= */
 (function(){
