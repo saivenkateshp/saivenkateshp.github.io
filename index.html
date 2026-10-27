@@ -44,6 +44,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .iconbtn{background:var(--chip);border:1px solid var(--line);border-radius:10px;height:36px;min-width:36px;padding:0 10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:border-color .2s}
 .iconbtn:hover{border-color:var(--accent)}
 @media(max-width:820px){.links a.hide-sm,.hide-sm{display:none!important}}
+@media(max-width:480px){.links{gap:8px}.iconbtn{padding:0 8px;min-width:34px}nav .wrap{padding:0 14px}.logo{font-size:14px}}
 
 .hero{position:relative;min-height:calc(100vh - 60px);display:flex;align-items:center;overflow:hidden;padding:40px 0}
 #space{position:absolute;inset:0;width:100%;height:100%;z-index:0;cursor:crosshair}
@@ -221,6 +222,28 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 .toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 .toast .btn{padding:8px 12px;font-size:14px}
 
+/* TL;DR */
+#tldr{z-index:65;align-items:flex-start;overflow:auto}
+.tlcard{background:var(--bg2);border:1px solid var(--line);border-radius:24px;max-width:860px;width:100%;margin:4vh auto;padding:30px;box-shadow:var(--shadow);animation:pop .25s ease;position:relative}
+.tlcard .top{padding-right:48px}
+.tlcard .top>[data-close]{position:absolute;top:18px;right:18px}
+.tlcard h3{font-size:clamp(26px,4vw,36px);letter-spacing:-.03em;line-height:1.1}
+.tlcard .role{color:var(--accent);font-weight:600;margin-top:4px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+@media(max-width:700px){.facts{grid-template-columns:repeat(2,1fr)}}
+.fact{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--card)}
+.fact small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-family:"JetBrains Mono",monospace}
+.fact b{font-size:14px}
+.wins5{list-style:none;display:grid;gap:8px;counter-reset:w}
+.wins5 li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:15px}
+.wins5 li:before{counter-increment:w;content:counter(w);flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#07101a}
+.wins5 b{color:var(--accent)}
+.wins5 small{display:block;color:var(--muted);font-size:12px}
+.tlsk{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.tlnote{color:var(--muted);font-size:13px;margin-top:14px}
+#tldrBtn{font-weight:700;font-size:13px}
+@media print{body>*:not(#tldr){display:none!important}#tldr{position:static;display:block;background:none}.tlcard{box-shadow:none;border:0;margin:0}.tlcard .row,.tlcard [data-close]{display:none!important}}
+
 /* scroll progress */
 #prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(var(--sp,0));background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:40;box-shadow:0 0 10px var(--accent)}
 
@@ -291,6 +314,8 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 /* live github */
 .gh{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-family:"JetBrains Mono",monospace;min-height:16px}
 .gh .live{color:var(--ok)}
+.caselink{font-size:14px;font-weight:600;color:var(--accent2);align-self:flex-start;position:relative;z-index:1}
+.caselink:hover{text-decoration:underline}
 
 /* magnetic */
 .mag{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
@@ -303,7 +328,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 <div id="spot" aria-hidden="true"></div>
 <div id="prog" aria-hidden="true"></div>
 <div id="boot" aria-hidden="true" style="display:none"><pre id="bootlog"></pre></div>
-<script>try{if(!sessionStorage.getItem("booted")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.getElementById("boot").style.display="flex"}catch(e){}</script>
+<script>try{if(!/tldr/i.test(location.hash+location.search)&&!sessionStorage.getItem("booted")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.getElementById("boot").style.display="flex"}catch(e){}</script>
 
 <nav><div class="wrap">
   <a class="logo" href="#top">~/sai<span>.</span>palatla</a>
@@ -314,6 +339,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
     <a href="#projects">Projects</a>
     <a href="#contact" class="hide-sm">Contact</a>
     <button class="iconbtn hide-sm" id="palBtn" aria-label="Open command palette"><kbd>Ctrl</kbd><kbd>K</kbd></button>
+    <button class="iconbtn" id="tldrBtn" aria-label="Recruiter TL;DR: one-screen summary" title="Recruiter TL;DR">TL;DR</button>
     <button class="iconbtn" id="termBtn" aria-label="Open terminal mode" title="Terminal mode">&gt;_</button>
     <button class="iconbtn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">🌓</button>
   </div>
@@ -333,7 +359,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
       <a class="btn" href="#projects">Projects</a>
       <a class="btn" href="Sai_V_Palatla_Resume.pdf" target="_blank" rel="noopener">Résumé ↓</a>
     </div>
-    <div class="hint"><span id="maphint">🖱️ Move your cursor through my skill map, then click a skill</span><span class="hide-sm"><kbd>Ctrl</kbd>+<kbd>K</kbd> jump anywhere</span><span><kbd>&gt;_</kbd> terminal mode</span></div>
+    <div class="hint"><span id="maphint">🖱️ Move your cursor through my skill map, then click a skill</span><button class="btn" id="mapHow" style="padding:4px 10px;font-size:13px">ⓘ How is this map computed?</button><span class="hide-sm"><kbd>Ctrl</kbd>+<kbd>K</kbd> jump anywhere</span><span><kbd>&gt;_</kbd> terminal mode</span></div>
   </div></div>
   <div class="legend" id="legend"></div>
 </header>
@@ -451,6 +477,34 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 <footer>© <span id="yr"></span> Sai Venkatesh Palatla · Hand-built, no frameworks · psst, try typing <span class="mono">hire</span></footer>
 
 <div class="overlay" id="modal" role="dialog" aria-modal="true" aria-label="Project details"><div class="sheet" id="sheet"></div></div>
+<div class="overlay" id="tldr" role="dialog" aria-modal="true" aria-label="Recruiter TL;DR"><div class="tlcard">
+  <div class="top"><div><span class="pill"><span class="dot"></span>Open to AI/ML Engineer roles · available now</span>
+    <h3 style="margin-top:12px">Sai Venkatesh Palatla</h3><div class="role">AI/ML Engineer · GenAI · RAG &amp; Agentic AI · Data platforms on GCP</div></div>
+    <button class="iconbtn" data-close aria-label="Close TL;DR">✕</button></div>
+  <div class="facts">
+    <div class="fact"><small>Experience</small><b>3+ years</b></div>
+    <div class="fact"><small>Location</small><b>Dallas, TX</b></div>
+    <div class="fact"><small>Education</small><b>M.S. CS, UT Dallas</b></div>
+    <div class="fact"><small>Fastest contact</small><b><a href="mailto:saivpalatla@gmail.com" style="color:var(--accent)">Email</a></b></div>
+  </div>
+  <ol class="wins5">
+    <li><span>Shipped a <b>real-time RAG pipeline</b> (Gemini API + Pinecone + FastAPI) over network runbooks, incident tickets and logs, reducing incident troubleshooting time.<small>Verizon · 2024–2026</small></span></li>
+    <li><span>Built <b>agentic AI workflows</b> with LangChain and Google ADK, with prompt engineering and output guardrails, for classification, summarization and semantic search.<small>Verizon</small></span></li>
+    <li><span>Engineered <b>PySpark pipelines on GCP Dataproc</b> and <b>BigQuery star schemas / SCDs</b> for high-volume network telemetry.<small>Verizon</small></span></li>
+    <li><span>Raised pipeline efficiency <b>+50%</b> and data quality to <b>95%</b>; built a BigQuery data catalog supporting <b>$50M+</b> in sales analytics.<small>Personalis · 2022–2023</small></span></li>
+    <li><span>Cut integration errors <b>90%</b> and SDLC time <b>70%</b> with an automated connector-testing framework and Jenkins CI/CD.<small>IBM · 2019</small></span></li>
+  </ol>
+  <div class="tlsk"></div>
+  <div class="row">
+    <a class="btn primary" href="mailto:saivpalatla@gmail.com?subject=Opportunity%20for%20Sai">Email Sai</a>
+    <button class="btn" data-copyemail>Copy email</button>
+    <a class="btn" href="Sai_V_Palatla_Resume.pdf" target="_blank" rel="noopener">Résumé PDF</a>
+    <a class="btn" href="https://www.linkedin.com/in/saivenkateshp" target="_blank" rel="noopener">LinkedIn</a>
+    <button class="btn" id="tldrLink">🔗 Copy TL;DR link</button>
+    <button class="btn" data-close>Explore the full site →</button>
+  </div>
+  <p class="tlnote">Tip: share <span class="mono">saivenkateshp.github.io/#tldr</span> to open this view directly. Press <kbd>Esc</kbd> to close.</p>
+</div></div>
 <div class="overlay" id="palette" role="dialog" aria-modal="true" aria-label="Command palette"><div class="pal">
   <input id="palIn" placeholder="Type a command, project, or question…" aria-label="Search commands">
   <ul id="palList" role="listbox"></ul>
@@ -515,6 +569,7 @@ const jobs=[
     "Reduced the legacy production-ticket backlog by <b>40%</b> through cross-team root-cause analysis."]}
 ];
 
+const CASE_IDS=new Set(["tweets","opera","deepmath"]);
 const projects=[
   {id:"nl2sql",emoji:"🤖",name:"NLP-to-SQL Data Agent",cat:["GenAI"],metric:null,
    blurb:"Autonomous agent that turns natural-language questions into accurate, executable SQL.",
@@ -692,36 +747,41 @@ function askAbout(skill){goAsk("Where has he used "+skill+"?")}
   const cats=Object.keys(CATS);
   $("#legend").innerHTML=cats.map(c=>`<span><i style="background:${CATS[c].c}"></i>${c}</span>`).join("");
   const hexA=(h,a)=>{const n=parseInt(h.slice(1),16);return`rgba(${n>>16&255},${n>>8&255},${n&255},${a})`};
+  // Positions computed offline from résumé text: PPMI co-occurrence over 38 passages -> cosine -> t-SNE (see tools/embed_skills.py)
+  const MAP={"RAG":{"x":0.7503,"y":0.8331,"c":"GenAI & LLMs","nn":["GCP","Pinecone","Gemini API"],"uses":4},"Agentic AI":{"x":0.4299,"y":0.9558,"c":"GenAI & LLMs","nn":["Prompt Engineering","Google ADK","LangChain"],"uses":3},"LangChain":{"x":0.4656,"y":0.9366,"c":"GenAI & LLMs","nn":["NLP","Google ADK","Prompt Engineering"],"uses":2},"LangGraph":{"x":0.5924,"y":0.8978,"c":"GenAI & LLMs","nn":["OpenAI API","NLP","Gemini API"],"uses":0},"Google ADK":{"x":0.4919,"y":0.9915,"c":"GenAI & LLMs","nn":["NLP","LangChain","Prompt Engineering"],"uses":2},"Gemini API":{"x":0.6676,"y":0.8886,"c":"GenAI & LLMs","nn":["Pinecone","LangGraph","OpenAI API"],"uses":1},"OpenAI API":{"x":0.613,"y":0.9248,"c":"GenAI & LLMs","nn":["LangGraph","NLP","Gemini API"],"uses":0},"Pinecone":{"x":0.6564,"y":0.8749,"c":"GenAI & LLMs","nn":["Gemini API","LangGraph","OpenAI API"],"uses":1},"Prompt Engineering":{"x":0.4789,"y":0.9669,"c":"GenAI & LLMs","nn":["NLP","LangChain","Google ADK"],"uses":3},"NLP":{"x":0.5157,"y":0.9505,"c":"GenAI & LLMs","nn":["LangChain","Google ADK","Prompt Engineering"],"uses":1},"Guardrails":{"x":0.4316,"y":1.0,"c":"GenAI & LLMs","nn":["LangChain","Google ADK","Prompt Engineering"],"uses":2},"PySpark":{"x":0.5539,"y":0.1053,"c":"Data Engineering","nn":["Apache Kafka","ETL / ELT","Apache Airflow"],"uses":2},"Apache Kafka":{"x":0.5168,"y":0.1004,"c":"Data Engineering","nn":["ETL / ELT","PySpark","Apache Airflow"],"uses":1},"Apache Airflow":{"x":0.5117,"y":0.023,"c":"Data Engineering","nn":["Databricks","Apache Kafka","ETL / ELT"],"uses":1},"Snowflake":{"x":0.428,"y":0.054,"c":"Data Engineering","nn":["BigQuery","Databricks","ETL / ELT"],"uses":0},"Databricks":{"x":0.4847,"y":0.035,"c":"Data Engineering","nn":["Apache Airflow","ETL / ELT","Snowflake"],"uses":0},"ETL / ELT":{"x":0.5061,"y":0.0811,"c":"Data Engineering","nn":["Apache Kafka","Databricks","PySpark"],"uses":4},"Star Schemas":{"x":0.5539,"y":0.0,"c":"Data Engineering","nn":["Apache Airflow","Databricks","ETL / ELT"],"uses":2},"BigQuery":{"x":0.3818,"y":0.0514,"c":"Data Engineering","nn":["Snowflake","Vertex AI","GKE"],"uses":4},"GCP":{"x":0.9387,"y":0.7146,"c":"Cloud","nn":["Cloud Composer","AWS","Vertex AI"],"uses":3},"GKE":{"x":0.8953,"y":0.6066,"c":"Cloud","nn":["Kubernetes","Vertex AI","GCP"],"uses":2},"Vertex AI":{"x":0.9428,"y":0.6608,"c":"Cloud","nn":["GCP","GKE","Cloud Composer"],"uses":1},"Cloud Composer":{"x":0.9352,"y":0.7451,"c":"Cloud","nn":["GCP","Vertex AI","Dataproc"],"uses":0},"Dataproc":{"x":0.9979,"y":0.6946,"c":"Cloud","nn":["GCS","GCP","Vertex AI"],"uses":1},"GCS":{"x":1.0,"y":0.7184,"c":"Cloud","nn":["Dataproc","GCP","Vertex AI"],"uses":2},"AWS":{"x":0.9015,"y":0.7025,"c":"Cloud","nn":["GCP","Vertex AI","Dataproc"],"uses":0},"FastAPI":{"x":0.6227,"y":0.5992,"c":"Backend & APIs","nn":["Spring Boot","REST","GraphQL"],"uses":2},"Spring Boot":{"x":0.6164,"y":0.5536,"c":"Backend & APIs","nn":["REST","GraphQL","Microservices"],"uses":1},"Flask":{"x":0.4395,"y":0.4654,"c":"Backend & APIs","nn":["Apache Solr","PageRank","GraphQL"],"uses":2},"GraphQL":{"x":0.6431,"y":0.5253,"c":"Backend & APIs","nn":["Microservices","Spring Boot","REST"],"uses":2},"REST":{"x":0.6486,"y":0.5611,"c":"Backend & APIs","nn":["Spring Boot","GraphQL","Microservices"],"uses":1},"Microservices":{"x":0.6663,"y":0.509,"c":"Backend & APIs","nn":["GraphQL","REST","Spring Boot"],"uses":4},"TensorFlow":{"x":0.1408,"y":0.4115,"c":"ML & Search","nn":["CNN","Keras","OpenCV"],"uses":1},"Keras":{"x":0.1082,"y":0.4329,"c":"ML & Search","nn":["CNN","TensorFlow","OpenCV"],"uses":1},"OpenCV":{"x":0.116,"y":0.4088,"c":"ML & Search","nn":["CNN","TensorFlow","Keras"],"uses":1},"CNN":{"x":0.1318,"y":0.4404,"c":"ML & Search","nn":["OpenCV","TensorFlow","Keras"],"uses":1},"Elasticsearch":{"x":0.515,"y":0.1706,"c":"ML & Search","nn":["Kibana","Apache Kafka","ETL / ELT"],"uses":1},"Apache Solr":{"x":0.3857,"y":0.4452,"c":"ML & Search","nn":["Flask","PageRank","Python"],"uses":1},"PageRank":{"x":0.3926,"y":0.4645,"c":"ML & Search","nn":["Flask","Apache Solr","Python"],"uses":1},"Python":{"x":0.199,"y":0.4383,"c":"Languages","nn":["Keras","TensorFlow","OpenCV"],"uses":5},"SQL":{"x":0.0744,"y":0.7278,"c":"Languages","nn":["Java","JavaScript","C++"],"uses":3},"Java":{"x":0.0457,"y":0.6887,"c":"Languages","nn":["C++","R","JavaScript"],"uses":1},"JavaScript":{"x":0.0179,"y":0.7215,"c":"Languages","nn":["C++","R","Java"],"uses":1},"C++":{"x":0.02,"y":0.6822,"c":"Languages","nn":["JavaScript","Java","R"],"uses":0},"R":{"x":0.0,"y":0.7059,"c":"Languages","nn":["JavaScript","Java","C++"],"uses":0},"Docker":{"x":0.8123,"y":0.4281,"c":"DevOps & BI","nn":["Kubernetes","CI/CD","Jenkins"],"uses":1},"Kubernetes":{"x":0.8845,"y":0.592,"c":"DevOps & BI","nn":["GKE","Vertex AI","Docker"],"uses":2},"Jenkins":{"x":0.7971,"y":0.3177,"c":"DevOps & BI","nn":["Grafana","Prometheus","Docker"],"uses":1},"CI/CD":{"x":0.8603,"y":0.358,"c":"DevOps & BI","nn":["Docker","Prometheus","Grafana"],"uses":2},"Grafana":{"x":0.8062,"y":0.2917,"c":"DevOps & BI","nn":["Jenkins","Prometheus","Tableau"],"uses":1},"Prometheus":{"x":0.8215,"y":0.3175,"c":"DevOps & BI","nn":["Jenkins","Grafana","Tableau"],"uses":1},"Tableau":{"x":0.8855,"y":0.281,"c":"DevOps & BI","nn":["Power BI","Prometheus","Grafana"],"uses":1},"Power BI":{"x":0.8895,"y":0.2867,"c":"DevOps & BI","nn":["Tableau","Prometheus","Grafana"],"uses":1},"Kibana":{"x":0.5432,"y":0.1825,"c":"DevOps & BI","nn":["Elasticsearch","Apache Kafka","ETL / ELT"],"uses":1}};
+  const NBR={};
   function layout(){
     const r=cv.getBoundingClientRect();W=r.width;H=r.height;const DPR=Math.min(devicePixelRatio||1,2);cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
-    const narrow=W<820,cx=narrow?W*.5:Math.min(W*.71,W-260),cy=narrow?H*.6:H*.5,R=Math.min(narrow?W*.36:W*.17,H*.32);
-    nodes=[];cats.forEach((c,ci)=>{const a=ci/cats.length*Math.PI*2-Math.PI/2,ccx=cx+Math.cos(a)*R,ccy=cy+Math.sin(a)*R*.88;
-      CATS[c].s.forEach((s,si)=>{const ang=si/CATS[c].s.length*Math.PI*2+ci,rad=(narrow?22:34)+(si%3)*(narrow?9:13);
-        const hx=ccx+Math.cos(ang)*rad,hy=ccy+Math.sin(ang)*rad;
-        nodes.push({s,c,col:CATS[c].c,hx,hy,x:hx+(Math.random()-.5)*80,y:hy+(Math.random()-.5)*80,vx:0,vy:0,r:3.8,ph:Math.random()*6.28})})});
+    const narrow=W<820,wrapL=Math.max(20,(W-1120)/2+20),x0=narrow?18:Math.max(wrapL+650,W*.5),x1=W-(narrow?18:40),y0=narrow?H*.06:70,y1=H-(narrow?24:84);
+    nodes=Object.entries(MAP).map(([s,v])=>{const hx=x0+v.x*(x1-x0),hy=y0+v.y*(y1-y0);
+      return{s,c:v.c,col:CATS[v.c].c,nn:v.nn,uses:v.uses,hx,hy,x:hx+(Math.random()-.5)*90,y:hy+(Math.random()-.5)*90,vx:0,vy:0,r:3.2+Math.min(v.uses,4)*.9,ph:Math.random()*6.28}});
+    const by={};nodes.forEach(n=>by[n.s]=n);nodes.forEach(n=>NBR[n.s]=n.nn.map(k=>by[k]).filter(Boolean));
   }
   function frame(){
     t+=.016;ctx.clearRect(0,0,W,H);const light=document.documentElement.dataset.theme==="light";
     for(const n of nodes){
-      const ox=reduce?0:Math.sin(t*.9+n.ph)*3,oy=reduce?0:Math.cos(t*.7+n.ph)*3;let ax=(n.hx+ox-n.x)*.02,ay=(n.hy+oy-n.y)*.02;
-      if(mouse.in&&!reduce){const dx=n.x-mouse.x,dy=n.y-mouse.y,d2=dx*dx+dy*dy;if(d2<16000&&n!==hover){const d=Math.sqrt(d2)||1,f=(16000-d2)/16000*1.6;ax+=dx/d*f;ay+=dy/d*f}}
+      const ox=reduce?0:Math.sin(t*.9+n.ph)*2.5,oy=reduce?0:Math.cos(t*.7+n.ph)*2.5;let ax=(n.hx+ox-n.x)*.02,ay=(n.hy+oy-n.y)*.02;
+      if(mouse.in&&!reduce){const dx=n.x-mouse.x,dy=n.y-mouse.y,d2=dx*dx+dy*dy;if(d2<12000&&n!==hover&&!(hover&&NBR[hover.s].includes(n))){const d=Math.sqrt(d2)||1,f=(12000-d2)/12000*1.4;ax+=dx/d*f;ay+=dy/d*f}}
+      for(const o of nodes){if(o===n)continue;const dx=n.x-o.x,dy=n.y-o.y,d2=dx*dx+dy*dy;if(d2<196&&d2>0){const d=Math.sqrt(d2);ax+=dx/d*(14-d)*.08;ay+=dy/d*(14-d)*.08}}
       n.vx=(n.vx+ax)*.86;n.vy=(n.vy+ay)*.86;n.x+=n.vx;n.y+=n.vy;
     }
-    const hc=hover?hover.c:null;
-    for(let i=0;i<nodes.length;i++){const a=nodes[i];for(let j=i+1;j<nodes.length;j++){const b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y),same=a.c===b.c,lim=same?92:68;
-      if(d<lim){let al=(1-d/lim)*(same?.38:.09);if(hc)al=(a.c===hc&&b.c===hc)?.8*(1-d/lim)+.1:al*.25;
-        ctx.strokeStyle=same?hexA(a.col,al):(light?`rgba(15,23,42,${al})`:`rgba(200,220,255,${al})`);ctx.lineWidth=same?1.1:.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}}
-    for(const n of nodes){const dim=hc&&n.c!==hc,on=n===hover;
-      if(on||(hc&&!dim)){ctx.beginPath();ctx.arc(n.x,n.y,n.r+(on?10:6),0,7);ctx.fillStyle=hexA(n.col,.16);ctx.fill()}
-      ctx.beginPath();ctx.arc(n.x,n.y,on?n.r+2.5:n.r,0,7);ctx.fillStyle=hexA(n.col,dim?.22:.95);ctx.fill();
-      if((hc&&n.c===hc)||on){ctx.font=(on?"600 13px":"500 11px")+" Inter,sans-serif";ctx.fillStyle=light?"#0f172a":"#e8eef8";ctx.globalAlpha=on?1:.85;ctx.fillText(n.s,n.x+9,n.y-9);ctx.globalAlpha=1}}
+    const hn=hover?new Set([hover,...NBR[hover.s]]):null;
+    // edges = each skill's 3 nearest neighbours in the co-occurrence embedding
+    for(const a of nodes)for(const b of NBR[a.s]){
+      const lit=hn&&(a===hover||b===hover);let al=lit?.85:(hn?.05:.22);
+      ctx.strokeStyle=a.c===b.c?hexA(a.col,al):(light?`rgba(15,23,42,${al*.8})`:`rgba(200,220,255,${al*.8})`);ctx.lineWidth=lit?1.6:.9;
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
+    for(const n of nodes){const on=n===hover,nb=hn&&hn.has(n)&&!on,dim=hn&&!hn.has(n);
+      if(on||nb){ctx.beginPath();ctx.arc(n.x,n.y,n.r+(on?11:7),0,7);ctx.fillStyle=hexA(n.col,.18);ctx.fill()}
+      ctx.beginPath();ctx.arc(n.x,n.y,on?n.r+2.5:n.r,0,7);ctx.fillStyle=hexA(n.col,dim?.2:.95);ctx.fill();
+      if(on||nb||(!hn&&n.uses>=3)){ctx.font=(on?"600 13px":"500 11px")+" Inter,sans-serif";ctx.fillStyle=light?"#0f172a":"#e8eef8";ctx.globalAlpha=on?1:(hn?.9:.55);ctx.fillText(n.s,n.x+9,n.y-9);ctx.globalAlpha=1}}
   }
   function loop(){if(!visible||reduce){looping=false;return}frame();requestAnimationFrame(loop)}
   function start(){if(reduce){frame();return}if(!looping&&visible){looping=true;requestAnimationFrame(loop)}}
   function pick(x,y){let best=null,bd=20*20;for(const n of nodes){const d=(n.x-x)**2+(n.y-y)**2;if(d<bd){bd=d;best=n}}return best}
   cv.addEventListener("pointermove",e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.in=true;
     const h=pick(mouse.x,mouse.y);if(h!==hover){hover=h;if(reduce)frame()}
-    if(h){tip.innerHTML=`<b>${esc(h.s)}</b><small>${esc(h.c)} · click to ask my résumé</small>`;tip.style.left=Math.max(8,Math.min(h.x+14,W-250))+"px";tip.style.top=(h.y+16)+"px";tip.classList.add("on");cv.style.cursor="pointer"}
+    if(h){tip.innerHTML=`<b>${esc(h.s)}</b><small>${esc(h.c)} · in ${h.uses} résumé bullet${h.uses===1?"":"s"}${h.uses?"":" (skills list)"}</small><small>closest: ${h.nn.map(esc).join(", ")}</small><small>click to ask my résumé</small>`;tip.style.left=Math.max(8,Math.min(h.x+14,W-250))+"px";tip.style.top=(h.y+16)+"px";tip.classList.add("on");cv.style.cursor="pointer"}
     else{tip.classList.remove("on");cv.style.cursor="crosshair"}});
   cv.addEventListener("pointerleave",()=>{mouse.in=false;hover=null;tip.classList.remove("on");if(reduce)frame()});
   cv.addEventListener("click",e=>{const r=cv.getBoundingClientRect(),h=pick(e.clientX-r.left,e.clientY-r.top);if(h)askAbout(h.s)});
@@ -767,6 +827,7 @@ function miniSvg(n){const w=220,step=w/(n-1);let s=`<svg class="mini" viewBox="-
       <div class="emoji">${p.emoji}</div><h3>${p.name}</h3><p>${p.blurb}</p>
       ${miniSvg(p.stages.length)}
       ${p.repo?`<div class="gh" data-repo="${p.repo}"></div>`:""}
+      ${CASE_IDS.has(p.id)?`<a class="caselink" href="case/${p.id}.html" onclick="event.stopPropagation()">📖 Read the case study →</a>`:""}
       <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
     </article>`).join("");
   function filter(c){[...f.children].forEach(b=>b.classList.toggle("on",b.dataset.c===c));
@@ -776,19 +837,35 @@ function miniSvg(n){const w=220,step=w/(n-1);let s=`<svg class="mini" viewBox="-
   grid.addEventListener("keydown",e=>{const c=e.target.closest(".proj");if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openProject(c.dataset.id)}});
 })();
 let lastFocus=null;
+function showMapMethod(){
+  closeAll(true);lastFocus=document.activeElement;
+  $("#sheet").innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px"><h3>🧭 How the skill map is computed</h3><button class="iconbtn" data-close aria-label="Close">✕</button></div>
+  <p style="color:var(--muted);margin:8px 0 14px">Dot positions aren't hand-placed. They're a real embedding, computed offline from the text of my résumé, so skills I've actually used together end up close together.</p>
+  <ol style="padding-left:20px;color:var(--muted);display:grid;gap:8px">
+   <li><b style="color:var(--text)">Corpus:</b> 38 passages from my résumé: every work bullet and project, plus the skills section at lower weight (0.35), so listing a skill counts less than using it.</li>
+   <li><b style="color:var(--text)">Skill × passage matrix:</b> 54 skills matched with aliases (e.g. "Spark" → PySpark).</li>
+   <li><b style="color:var(--text)">Co-occurrence → PPMI:</b> positive pointwise mutual information rewards pairs that appear together more often than chance.</li>
+   <li><b style="color:var(--text)">Cosine similarity</b> between the PPMI vectors gives a skill-to-skill distance.</li>
+   <li><b style="color:var(--text)">t-SNE</b> projects those distances to 2-D (perplexity 9, fixed seed, so the layout is reproducible).</li>
+   <li><b style="color:var(--text)">Lines</b> connect each skill to its 3 nearest neighbours. <b style="color:var(--text)">Dot size</b> is how many résumé bullets mention it.</li>
+  </ol>
+  <p style="color:var(--muted);margin-top:14px">What falls out: Python sits with TensorFlow/Keras/CNN (ML work), Kafka · PySpark · Airflow sit beside Elasticsearch/Kibana (the streaming project), Solr · PageRank · Flask cluster (the search engine), and Kubernetes lands on GKE. A small category prior (weight 0.2) keeps skills that appear only in the skills list near their group.</p>
+  <div class="row"><button class="btn primary" data-close>Got it</button></div>`;
+  $("#modal").classList.add("on");document.body.style.overflow="hidden";$("#sheet [data-close]").focus();
+}
 function openProject(id){
   const p=projects.find(x=>x.id===id);if(!p)return;ach("pipe");closeAll(true);lastFocus=document.activeElement;
   const n=p.stages.length,cols=innerWidth<640?2:(n>4?3:n),bw=128,bh=46,gx=34,gy=40,rows=Math.ceil(n/cols),W=cols*bw+(cols-1)*gx,H=rows*bh+(rows-1)*gy;
   const pos=p.stages.map((s,i)=>{const r=Math.floor(i/cols),c=r%2?cols-1-(i%cols):i%cols;return{x:c*(bw+gx),y:r*(bh+gy)}});
   let path="M"+(pos[0].x+bw/2)+","+(pos[0].y+bh/2);pos.slice(1).forEach(q=>path+=" L"+(q.x+bw/2)+","+(q.y+bh/2));
   let svg=`<svg class="pipe" viewBox="-6 -6 ${W+12} ${H+12}" role="img" aria-label="${esc(p.name)} pipeline"><path class="edge" id="pp" d="${path}"/>`;
-  if(!reduce)for(let k=0;k<3;k++)svg+=`<circle class="pkt" r="5"><animateMotion dur="3.6s" begin="${k*1.2}s" repeatCount="indefinite"><mpath href="#pp"/></animateMotion></circle>`;
+  if(!reduce)for(let k=0;k<3;k++)svg+=`<circle class="pkt" r="5"><animateMotion dur="3.6s" begin="-${k*1.2}s" repeatCount="indefinite"><mpath href="#pp"/></animateMotion></circle>`;
   svg+=pos.map((q,i)=>`<g class="stage" data-i="${i}" tabindex="0" role="button" aria-label="Stage ${i+1}: ${esc(p.stages[i][0])}"><rect x="${q.x}" y="${q.y}" width="${bw}" height="${bh}" rx="10"/><text x="${q.x+bw/2}" y="${q.y+bh/2}">${p.stages[i][0]}</text></g>`).join("")+"</svg>";
   $("#sheet").innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><div style="font-size:32px">${p.emoji}</div><h3>${p.name}</h3><p style="color:var(--muted)">${p.blurb}</p></div><button class="iconbtn" data-close aria-label="Close">✕</button></div>
     ${svg}<div class="stageinfo" id="stageinfo" aria-live="polite">👆 Click a stage to see what it does.</div>
     <ul>${p.bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
     <div class="row">${p.repo?`<a class="btn primary" target="_blank" rel="noopener" href="${GH+p.repo}">View code on GitHub →</a>`:`<span class="btn" style="cursor:default">Repo coming soon</span>`}
-    <button class="btn" data-ask>Ask my résumé about this</button><button class="btn" data-close>Close</button></div>`;
+    ${CASE_IDS.has(p.id)?`<a class="btn" href="case/${p.id}.html">📖 Case study</a>`:""}<button class="btn" data-ask>Ask my résumé about this</button><button class="btn" data-close>Close</button></div>`;
   const show=i=>{$$("#sheet .stage").forEach(g=>g.classList.toggle("on",+g.dataset.i===i));$("#stageinfo").innerHTML=`<b>${i+1}. ${p.stages[i][0]}</b>: ${p.stages[i][1]}`};
   $$("#sheet .stage").forEach(g=>{g.addEventListener("click",()=>show(+g.dataset.i));g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(+g.dataset.i)}})});
   $("#sheet [data-ask]").onclick=()=>{closeAll();goAsk("Tell me about "+p.name)};
@@ -802,6 +879,9 @@ $("#modal").addEventListener("click",e=>{if(e.target.id==="modal"||e.target.clos
 const ACTIONS=[
   ...[["Ask my résumé","ask"],["Experience","experience"],["Projects","projects"],["Skills","skills"],["Education","education"],["Contact","contact"],["Top","top"]].map(([n,id])=>({n:"Go to "+n,k:"Section",run:()=>document.getElementById(id).scrollIntoView({behavior:smooth()})})),
   ...projects.map(p=>({n:"Open project: "+p.name,k:"Project",run:()=>openProject(p.id)})),
+  ...projects.filter(p=>CASE_IDS.has(p.id)).map(p=>({n:"Case study: "+p.name,k:"Read",run:()=>{location.href="case/"+p.id+".html"}})),
+  {n:"Recruiter TL;DR (one-screen summary)",k:"View",run:()=>openTldr()},
+  {n:"How is the skill map computed?",k:"Info",run:()=>showMapMethod()},
   {n:"Copy email address",k:"Action",run:copyEmail},
   {n:"Email Sai",k:"Action",run:()=>{location.href="mailto:"+EMAIL}},
   {n:"Download résumé (PDF)",k:"Action",run:()=>open(LINKS.resume,"_blank")},
@@ -864,6 +944,8 @@ Welcome! Type <span class='c3'>help</span> to see commands. Try <span class='c3'
   <span class='c3'>open &lt;project&gt;</span>      animated pipeline (tweets, opera, deepmath, nl2sql)
   <span class='c3'>ask &lt;question&gt;</span>      query the résumé RAG from the shell
   <span class='c3'>skills [area]</span>       list skills by area
+  <span class='c3'>case &lt;project&gt;</span>      read a case study (tweets, opera, deepmath)
+  <span class='c3'>tldr</span>                one-screen recruiter summary
   <span class='c3'>match</span>               open the job-description matcher
   <span class='c3'>play</span>                pipeline puzzle mini-game
   <span class='c3'>achievements</span>        your exploration progress
@@ -890,6 +972,8 @@ Welcome! Type <span class='c3'>help</span> to see commands. Try <span class='c3'
     echo:a=>esc(a.join(" ")),
     sudo:a=>{if(a.join(" ").toLowerCase()==="hire sai"){setTimeout(celebrate,200);return"<span class='c1'>[sudo] permission granted ✔</span>\nInitiating hiring sequence… 🎉\nNext step: <a href='mailto:"+EMAIL+"?subject=Let%27s%20talk'>email "+EMAIL+"</a>"}return"<span class='err'>sai is not in the sudoers file. This incident will be reported. 😉</span>"},
     rm:()=>"<span class='err'>nice try 😄</span>",
+    case:a=>{const id=(a[0]||"").toLowerCase();if(!CASE_IDS.has(id))return"<span class='err'>usage: case tweets|opera|deepmath</span>";setTimeout(()=>location.href="case/"+id+".html",300);return"opening case study: "+id+"…"},
+    tldr:()=>{setTimeout(()=>openTldr(),60);return"opening recruiter TL;DR…"},
     match:()=>{closeTerm();setTimeout(()=>{document.getElementById("match").scrollIntoView({behavior:smooth()});$("#jdtext").focus({preventScroll:true})},60);return"opening JD matcher…"},
     play:()=>{closeTerm();setTimeout(()=>document.getElementById("play").scrollIntoView({behavior:smooth()}),60);return"loading pipeline puzzle…"},
     achievements:()=>ACH.map(([k,i,n,d])=>(GOT.has(k)?"<span class='c1'>✔</span> "+i+" "+n:"<span class='dim'>○ ??? · "+d+"</span>")).join("\n")+`\n<span class='dim'>${GOT.size}/${ACH.length} unlocked</span>`
@@ -913,8 +997,8 @@ Welcome! Type <span class='c3'>help</span> to see commands. Try <span class='c3'
 
 /* ================= GLOBAL KEYS / CLOSE ================= */
 function closeAll(silent){
-  const was=$("#modal").classList.contains("on")||$("#palette").classList.contains("on")||$("#term").classList.contains("on");
-  $("#modal").classList.remove("on");$("#palette").classList.remove("on");$("#term").classList.remove("on");document.body.style.overflow="";
+  const was=$("#tldr").classList.contains("on")||$("#modal").classList.contains("on")||$("#palette").classList.contains("on")||$("#term").classList.contains("on");
+  $("#modal").classList.remove("on");$("#palette").classList.remove("on");$("#term").classList.remove("on");if($("#tldr").classList.contains("on")){$("#tldr").classList.remove("on");if(location.hash==="#tldr")history.replaceState(null,"",location.pathname+location.search)}document.body.style.overflow="";
   if(was&&!silent&&lastFocus&&lastFocus.focus)lastFocus.focus();
 }
 (function(){
@@ -941,6 +1025,18 @@ function celebrate(fromAch,head){
   let f=0;(function tick(){c.clearRect(0,0,w,h);ps.forEach(p=>{p.vy+=.38;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);c.restore()});
     if(++f<200)requestAnimationFrame(tick);else c.clearRect(0,0,w,h)})();
 }
+
+/* ================= TL;DR ================= */
+function openTldr(){closeAll(true);lastFocus=document.activeElement;const o=$("#tldr");o.classList.add("on");document.body.style.overflow="hidden";
+  if(location.hash!=="#tldr")history.replaceState(null,"","#tldr");setTimeout(()=>o.querySelector("[data-close]").focus(),30)}
+(function(){
+  const top=["RAG","Agentic AI","LangChain","LangGraph","Google ADK","Gemini API","Pinecone","Python","SQL","PySpark","BigQuery","GCP","FastAPI","Apache Kafka","Apache Airflow","Docker","Kubernetes"];
+  const card=$("#tldr .tlsk");card.innerHTML=top.map(t=>`<span class="tag" style="font-size:13px;padding:5px 10px">${esc(t)}</span>`).join("");
+  $("#tldr").addEventListener("click",e=>{if(e.target.id==="tldr"||e.target.closest("[data-close]"))closeAll();if(e.target.closest("[data-copyemail]"))copyEmail()});
+  $("#tldrLink").onclick=async()=>{const u=location.origin+location.pathname+"#tldr";try{await navigator.clipboard.writeText(u);toast("🔗 Copied <b>"+esc(u)+"</b>")}catch(e){toast(esc(u))}};
+  $("#tldrBtn").onclick=openTldr;
+  const chk=()=>{if(/^#tldr$/i.test(location.hash)||/[?&]tldr\b/i.test(location.search))openTldr()};addEventListener("hashchange",chk);chk();
+})();
 
 /* ================= ACHIEVEMENTS ================= */
 const ACH=[["ask","🤖","Curious recruiter","Asked my résumé a question"],["jd","📋","Talent scout","Matched a job description"],["pipe","🔀","Systems thinker","Opened a project pipeline"],
@@ -1085,7 +1181,7 @@ Nice to have: PyTorch, fine-tuning, MLflow, Terraform`;
   $$(".reveal").forEach(el=>io.observe(el));
   const links=$$(".links a");const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-45% 0px -50% 0px"});
   $$("section[id]").forEach(s=>so.observe(s));
-  $("#copy").onclick=copyEmail;if(matchMedia("(hover:none)").matches)$("#maphint").textContent="👆 Tap a dot in the skill map to ask my résumé about it";$("#yr").textContent=new Date().getFullYear();
+  $("#copy").onclick=copyEmail;$("#mapHow").onclick=showMapMethod;if(matchMedia("(hover:none)").matches)$("#maphint").textContent="👆 Tap a dot in the skill map to ask my résumé about it";$("#yr").textContent=new Date().getFullYear();
 })();
 </script>
 </body>
