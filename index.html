@@ -8,6 +8,15 @@
 <meta property="og:title" content="Sai Venkatesh Palatla · AI/ML Engineer">
 <meta property="og:description" content="RAG pipelines · Agentic AI (LangChain, LangGraph, Google ADK) · Data Engineering on GCP. Ask my résumé anything.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://saivenkateshp.github.io/">
+<meta property="og:image" content="https://saivenkateshp.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sai Venkatesh Palatla, AI/ML Engineer: RAG pipelines, agentic AI, data engineering on GCP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://saivenkateshp.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Sai Venkatesh Palatla", "url": "https://saivenkateshp.github.io/", "jobTitle": "AI/ML Engineer", "email": "mailto:saivpalatla@gmail.com", "image": "https://saivenkateshp.github.io/og.png", "sameAs": ["https://www.linkedin.com/in/saivenkateshp", "https://github.com/saivenkateshp", "https://leetcode.com/u/saivenkateshpalatla/"], "alumniOf": [{"@type": "CollegeOrUniversity", "name": "The University of Texas at Dallas"}, {"@type": "CollegeOrUniversity", "name": "Amrita Vishwa Vidyapeetham"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -321,6 +330,11 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 .mag{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.win{opacity:1!important;transform:none!important}}
+.skip{position:absolute;left:12px;top:-60px;z-index:9999;background:var(--accent);color:#04121a;padding:10px 14px;border-radius:10px;font-weight:700;transition:top .15s}
+.skip:focus{top:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pipe .stage:focus-visible rect{stroke:var(--accent);stroke-width:2.5}
+.pal input:focus-visible,.term input:focus-visible{outline:none;box-shadow:inset 0 -2px 0 var(--accent)}
 @media (hover:none){#spot{display:none}}
 </style>
 </head>
@@ -330,6 +344,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
 <div id="boot" aria-hidden="true" style="display:none"><pre id="bootlog"></pre></div>
 <script>try{if(!/tldr/i.test(location.hash+location.search)&&!sessionStorage.getItem("booted")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.getElementById("boot").style.display="flex"}catch(e){}</script>
 
+<a class="skip" href="#main">Skip to content</a>
 <nav><div class="wrap">
   <a class="logo" href="#top">~/sai<span>.</span>palatla</a>
   <div class="links">
@@ -345,12 +360,12 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
   </div>
 </div></nav>
 
-<main>
+<main id="main" tabindex="-1">
 <header class="hero" id="top">
   <canvas id="space" role="img" aria-label="Interactive map of Sai's skills grouped by area. Hover a node to see a skill; click it to ask the résumé about it."></canvas>
   <div class="tip" id="tip"></div>
   <div class="wrap"><div class="hero-text">
-    <span class="pill"><span class="dot"></span>Open to AI/ML Engineer roles · Dallas, TX · <a href="mailto:saivpalatla@gmail.com" style="color:var(--accent)">saivpalatla@gmail.com</a></span>
+    <span class="pill"><span class="dot"></span>Open to AI/ML Engineer roles · Austin, TX · <a href="mailto:saivpalatla@gmail.com" style="color:var(--accent)">saivpalatla@gmail.com</a></span>
     <h1>Hi, I'm <span class="grad">Sai Venkatesh Palatla</span></h1>
     <div class="typer" aria-live="polite"><span id="typed"></span><span class="caret"></span></div>
     <p class="lead">AI/ML Engineer with 3+ years building Generative AI applications and data platforms on Google Cloud: RAG pipelines, agentic workflows, and production FastAPI services.</p>
@@ -483,7 +498,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:26px 0 44px}
     <button class="iconbtn" data-close aria-label="Close TL;DR">✕</button></div>
   <div class="facts">
     <div class="fact"><small>Experience</small><b>3+ years</b></div>
-    <div class="fact"><small>Location</small><b>Dallas, TX</b></div>
+    <div class="fact"><small>Location</small><b>Austin, TX</b></div>
     <div class="fact"><small>Education</small><b>M.S. CS, UT Dallas</b></div>
     <div class="fact"><small>Fastest contact</small><b><a href="mailto:saivpalatla@gmail.com" style="color:var(--accent)">Email</a></b></div>
   </div>
@@ -668,13 +683,13 @@ const RAG=(function(){
   projects.forEach(p=>docs.push({src:"Project · "+p.name,text:p.name+": "+p.blurb+" Tech: "+p.tags.join(", ")+"."}));
   Object.entries(CATS).forEach(([k,v])=>docs.push({src:"Skills · "+k,text:k+" skills: "+v.s.join(", ")+"."}));
   docs.push({src:"Profile",text:"Sai Venkatesh Palatla is an AI/ML Engineer with 3+ years of experience building Generative AI applications and scalable data platforms on Google Cloud (BigQuery, GKE, Vertex AI)."});
-  docs.push({src:"Profile",text:"Sai is based in Dallas, Texas and is open to AI/ML Engineer, GenAI and Data Engineering roles. Email is the fastest way to reach him."});
+  docs.push({src:"Profile",text:"Sai is based in Austin, Texas and is open to AI/ML Engineer, GenAI and Data Engineering roles. Email is the fastest way to reach him."});
   docs.push({src:"Contact",text:"The fastest way to contact Sai is email at "+EMAIL+". He is also on LinkedIn (saivenkateshp), GitHub (saivenkateshp) and LeetCode (saivenkateshpalatla)."});
   docs.push({src:"Education",text:"Sai holds an M.S. in Computer Science from The University of Texas at Dallas (2021–2023) and a B.E. in Computer Science from Amrita Vishwa Vidyapeetham (2015–2019)."});
   docs.push({src:"Profile",text:"Sai uses AI-assisted development tools including GitHub Copilot, Claude, Cursor and ChatGPT day to day."});
 
   const STOP=new Set("a an the is are was were be been has have had do does did of in on at to for with and or but by from as it its this that these those he his him sai what which who whom how when where why can could would should will any some about into over i me my you your there their they them than then also used use using experience experienced worked work working ever done know tell does did get got".split(" "));
-  const SYN={llm:["gemini","openai","langchain","rag","generative"],llms:["gemini","openai","langchain","rag"],genai:["generative","rag","gemini","agentic"],ai:["agentic","generative","rag"],
+  const SYN={location:["based","austin","texas"],located:["based","austin","texas"],locat:["based","austin","texas"],live:["based","austin","texas"],lives:["based","austin","texas"],city:["based","austin","texas"],relocate:["based","austin","texas"],relocation:["based","austin","texas"],llm:["gemini","openai","langchain","rag","generative"],llms:["gemini","openai","langchain","rag"],genai:["generative","rag","gemini","agentic"],ai:["agentic","generative","rag"],
     agent:["agentic","adk","langgraph"],agents:["agentic","adk","langgraph"],framework:["langchain","adk","langgraph"],frameworks:["langchain","adk","langgraph"],
     vector:["pinecone","embeddings"],embedding:["embeddings","pinecone"],retrieval:["rag","pinecone"],production:["deployed","production"],
     cloud:["gcp","google","aws","bigquery"],google:["gcp","gemini","adk"],k8s:["kubernetes","gke"],kubernetes:["gke","containerized"],container:["docker","gke","containerized"],
@@ -914,7 +929,7 @@ const ACTIONS=[
 
 /* ================= TERMINAL ================= */
 const FS={
-  "about.md":"<span class='c1'># Sai Venkatesh Palatla</span>\nAI/ML Engineer · 3+ years · Dallas, TX\nRAG pipelines · Agentic AI (LangChain, LangGraph, Google ADK) · Data platforms on GCP\nStatus: <span class='c3'>open to AI/ML Engineer roles</span>",
+  "about.md":"<span class='c1'># Sai Venkatesh Palatla</span>\nAI/ML Engineer · 3+ years · Austin, TX\nRAG pipelines · Agentic AI (LangChain, LangGraph, Google ADK) · Data platforms on GCP\nStatus: <span class='c3'>open to AI/ML Engineer roles</span>",
   "contact.txt":"email    : <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>  <span class='dim'>(fastest)</span>\nlinkedin : <a href='"+LINKS.linkedin+"' target='_blank' rel='noopener'>"+LINKS.linkedin+"</a>\ngithub   : <a href='"+LINKS.github+"' target='_blank' rel='noopener'>"+LINKS.github+"</a>\nleetcode : <a href='"+LINKS.leetcode+"' target='_blank' rel='noopener'>"+LINKS.leetcode+"</a>",
   "education.md":"M.S. Computer Science · UT Dallas · 2021–2023\nB.E. Computer Science · Amrita Vishwa Vidyapeetham · 2015–2019"
 };
